@@ -1,7 +1,5 @@
-import logo from "./logo.svg";
 import "./App.css";
-import SideBar from "./Component/SideBar";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function App() {
   const [details, setdetails] = useState([]);
@@ -47,12 +45,9 @@ function App() {
   const [userdata, setuserdata] = useState(data);
 
   const click_onclik = (id) => {
-    userdata.pop(data.filter((f) => f.id == id));
+    userdata.pop(data.filter((f) => f.id === id));
     setuserdata([...userdata]);
-
-    // setuserdata({...userdata,userdata.pop(data.filter((f) => f.id == id))});
-    // // setdetails(data.filter((f) => f.id == id));
-    // console.log(details.length);
+    setdetails(data.filter((f) => f.id === id));
   };
 
   const coloumn = ["Id", "Name", "Age", "Degree", "Phone"];
