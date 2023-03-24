@@ -1,0 +1,35 @@
+.Icon--bar{
+    position: relative;
+    width: 90%;
+    height: auto;
+    padding: 15px 1px;
+    color: white;
+    background-color: rgb(35, 65, 91);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    word-break: break-word;
+}
+
+.Icon--bar svg
+{
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);   
+}
+
+.Icon--bar--icon{
+    max-width: 70px;
+}
+
+.Icon--bar--text{
+    max-width: 180px;
+    margin-left: 20px;
+}
+
+
+
+
