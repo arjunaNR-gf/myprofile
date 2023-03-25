@@ -1,42 +1,27 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+name: Gatsby Publish
 
-name: Node.js CI
-
-on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
-    - name: Deploy
-      run: |
-        git config --global user.name $arjunaNR-gf
-        git config --global user.email $arjun042896@gmail.com
-        git remote set-url origin https://${github_token}@github.com/${repository}
-        npm run deploy
-      env:
-       user_name: 'github-actions[bot]'
-       user_email: 'github-actions[bot]@users.noreply.github.com'
-       github_token: ${{ secrets.MYPROFILE }}
-       repository: ${{ github.repository }}
+      - uses: actions/checkout@v1
+      - name: npm install and build and deploy
+        run: |
+          npm install
+          npm run prebuild
+      - uses: peaceiris/actions-gh-pages@v2
+        env:
+          ACTIONS_DEPLOY_KEY: ${{ secrets.MYPROFILE }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: ./public
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: npm build and test
+        run: |
+          npm install
+          npm run build
+          npm run test
